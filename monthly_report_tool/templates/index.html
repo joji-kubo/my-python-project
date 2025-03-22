@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>月報作成ツール</title>
+</head>
+<body>
+    <h1>月報作成ツール</h1>
+    
+    <h2>データ入力</h2>
+    <form method="post">
+        日付: <input type="date" name="date" required><br>
+        開始時間: <input type="time" name="start_time" required><br>
+        終了時間: <input type="time" name="end_time" required><br>
+        報告内容: <textarea name="content" required></textarea><br>
+        <button type="submit">保存</button>
+    </form>
+    
+    <h2>月報取得</h2>
+    <form action="/report" method="post">
+        月: <input type="month" name="month" required>
+        <button type="submit">表示</button>
+    </form>
+    
+    {% if tables %}
+        <h2>月報一覧 ({{ month }})</h2>
+        {{ tables[0] | safe }}
+        <form action="/export" method="post">
+            <input type="hidden" name="month" value="{{ month }}">
+            <button type="submit">CSVエクスポート</button>
+        </form>
+    {% endif %}
+</body>
+</html>
